@@ -5,6 +5,7 @@ const testURL = "https://api.darksky.net/forecast/bef64b7f9653bd2ecdad26b985f070
 request({url: testURL, json: true}, (error, response) => {
   const currentlyData = response.body.currently;
   const dailyData = response.body.daily;
+  console.log(dailyData.data[0].summary)
   console.log('It is currently ' + currentlyData.temperature
              + ' C. There is a '
              + currentlyData.precipProbability
