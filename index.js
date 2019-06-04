@@ -1,16 +1,24 @@
 const geocode = require('./utilities/geocode');
 const forecast = require('./utilities/forecast');
 
-// Dark Sky API
+const city = process.argv[2];
 
-forecast(-75.7088, 44.1545, (error, data) => {
-  console.log('Error', error)
-  console.log('Data', data)
-})
+if (!city) {
+  console.log('Please include a city in your query')
+}
+else {
+  // Dark Sky API & Mapbox geocoding
 
-// Mapbox geocoding
-
-geocode('Nashville', (error, data) => {
-  console.log('Error', error)
-  console.log('Data',data)
-})
+  geocode(city, (error, data) => {
+    if (error) {
+      return console.log(error)
+    }
+    forecast(data.latitude, data.longitude, (error, forecastData) => {
+      if (error) {
+        return console.log(error)
+      }
+      console.log(data.location)
+      console.log(forecastData)
+    })
+  })
+}
